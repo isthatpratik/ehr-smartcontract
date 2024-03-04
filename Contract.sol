@@ -41,14 +41,10 @@ contract Contract{
         admin.add(admin_id);
     }
 
-    //get Admin
-
     function getAdmin() public view returns(address){
         return admin_id;
     }
 
-
-    //Add Doctor
 
     function addDoctor(address _newdr) public{
         require(admin.has(msg.sender), 'Only For Admin'); 
@@ -60,33 +56,24 @@ contract Contract{
         doctor.remove(docID);
     }
 
-   // check is Doctor
-
     function isDr(address id) public view returns(string memory){
         require(doctor.has(id), "Only for Doctors");
         return "1";
     }
-
-    // Check is Patient
 
     function isPat(address id) public view returns(string memory){
         require(patient.has(id), "Only for Doctors");
         return "1";
     }
 
-    //  Add patient
 
     function addPatient(address _newpatient) external onlyAdmin() {
         patient.add(_newpatient);
     }
 
-    // Get Patient Information => retrun pateint IPFS hash
-
     function getPatInfo(address iD)public view returns(string memory){
         return (Patients[iD].patHash);
     }
-
-    // Add patient Information to BlockChain
 
     function addPatInfo(address pat_id, string memory _patInfoHash) public {
         Patient storage patInfo = Patients[pat_id];
@@ -96,8 +83,6 @@ contract Contract{
         patient.add(pat_id);
     }
 
-    // Add Medical record to block chain
-
     function addMedRecord(string memory _recHash, address _pat_id) public{
         require(doctor.has(msg.sender) == true, 'Only Doctor Can Do That');
 
@@ -106,15 +91,10 @@ contract Contract{
         RecordHashes.push(_recHash);
     }
 
-    // View Medical record return IPFS hash of record
     
     function viewMedRec(address id)public view returns(string memory){
         return (Records[id].RecordHash);
     }
-
-    /*
-        Modifiers
-    */
 
 
     modifier onlyAdmin(){
